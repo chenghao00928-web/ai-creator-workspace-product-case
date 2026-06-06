@@ -71,8 +71,8 @@ Token 成本测算
 - [x] 产品功能方案
 - [x] PRD 初稿
 - [x] 原型设计
-- [ ] Token 成本测算
-- [ ] 商业化套餐设计
+- [x] Token 成本测算
+- [x] 商业化套餐设计
 - [x] 迭代优先级设计
 
 ## 8. 已完成产出
@@ -83,3 +83,4 @@ Token 成本测算
 - [产品方案报告](docs/product-report.md)
 - [PRD 初稿](docs/prd.md)
 - [低保真原型设计](prototype/low-fidelity-wireframes.md)
+- [商业化分析](docs/commercialization.md)

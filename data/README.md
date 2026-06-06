@@ -8,3 +8,7 @@
 - user-interviews.xlsx
 - pain-points.xlsx
 - token-cost-model.xlsx
+
+当前已补充：
+
+- [Token 成本测算 CSV](token-cost-model.csv)
