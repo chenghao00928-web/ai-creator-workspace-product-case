@@ -4,7 +4,7 @@
 
 本项目是一个面向 **AI 产品经理实习岗位** 的 AIGC 产品作品集项目。
 
-项目围绕豆包、Kimi、通义千问、即梦 AI、Canva AI、ChatGPT、Claude、Gemini、Perplexity 等国内外 AIGC 产品展开竞品分析，重点拆解 Prompt 引导、生成结果编辑、历史管理、多模态能力、工作流闭环和会员商业化策略。
+项目围绕豆包、Kimi、通义千问、即梦 AI、ChatGPT、Claude、Gemini 等国内外 AIGC 产品展开竞品分析，重点拆解 Prompt 引导、生成结果编辑、历史管理、多模态能力、工作流闭环和会员商业化策略。
 
 在竞品分析和用户调研基础上，项目设计一个面向求职学生的 **AI 求职工作台 MVP**，帮助用户完成岗位 JD 解析、能力差距分析、简历表达改写、面试问题生成和投递项目管理。
 
@@ -153,4 +153,3 @@ POST /api/analyze-jd
 - [商业化分析](docs/commercialization.md)
 - [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
 - [简历项目描述与面试讲述稿](docs/resume-and-interview.md)
-
