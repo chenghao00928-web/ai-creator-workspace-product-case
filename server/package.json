@@ -1,0 +1,17 @@
+{
+  "name": "ai-job-workspace-demo-server",
+  "version": "1.0.0",
+  "description": "Backend API for AI 求职工作台 Demo using DeepSeek OpenAI-compatible API.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.3",
+    "openai": "^4.86.1"
+  }
+}

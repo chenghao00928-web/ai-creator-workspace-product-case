@@ -1,5 +1,9 @@
-# Demo 页面
+# AI 求职工作台 Demo
 
-本目录用于存放可选的静态 Demo 页面，用来展示 AI 创作助手工作台的核心流程。
+本目录包含可运行的前端页面：
 
-Demo 可以先不接入真实大模型 API，使用静态模拟内容展示产品交互。
+- `index.html`
+- `style.css`
+- `script.js`
+
+启动方式见根目录 `README.md` 和 `docs/api-integration.md`。

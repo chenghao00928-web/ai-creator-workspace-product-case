@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 求职工作台 Demo</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">AI 产品经理作品集 Demo</p>
+          <h1>AI 求职工作台</h1>
+          <p class="subtitle">
+            输入岗位 JD 和个人背景，一键生成岗位分析、能力差距、简历改写建议和面试问题。
+          </p>
+        </div>
+        <div class="hero-badge">
+          <span>DeepSeek API</span>
+          <strong>JD 分析</strong>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <form id="analysisForm" class="panel form-panel">
+          <div class="panel-header">
+            <h2>输入信息</h2>
+            <button type="button" id="fillExampleBtn" class="ghost-button">填入示例</button>
+          </div>
+
+          <label>
+            目标岗位
+            <input
+              id="targetRole"
+              name="targetRole"
+              type="text"
+              placeholder="例如：AI 产品经理实习生"
+              required
+            />
+          </label>
+
+          <label>
+            岗位 JD
+            <textarea
+              id="jobDescription"
+              name="jobDescription"
+              rows="9"
+              placeholder="粘贴岗位职责、任职要求、加分项等..."
+              required
+            ></textarea>
+          </label>
+
+          <label>
+            个人背景
+            <textarea
+              id="userBackground"
+              name="userBackground"
+              rows="7"
+              placeholder="例如：西安交通大学应用统计研一，本科工商管理，有数据分析基础..."
+              required
+            ></textarea>
+          </label>
+
+          <fieldset>
+            <legend>输出重点</legend>
+            <div class="checkbox-grid">
+              <label><input type="checkbox" value="岗位职责" checked /> 岗位职责</label>
+              <label><input type="checkbox" value="能力关键词" checked /> 能力关键词</label>
+              <label><input type="checkbox" value="能力差距" checked /> 能力差距</label>
+              <label><input type="checkbox" value="简历改写建议" checked /> 简历改写建议</label>
+              <label><input type="checkbox" value="面试问题" checked /> 面试问题</label>
+            </div>
+          </fieldset>
+
+          <div class="actions">
+            <button type="submit" id="submitBtn" class="primary-button">生成分析</button>
+            <button type="button" id="clearBtn" class="secondary-button">清空内容</button>
+          </div>
+
+          <p id="errorBox" class="error-box" hidden></p>
+        </form>
+
+        <section class="panel result-panel">
+          <div class="panel-header">
+            <h2>分析结果</h2>
+            <div class="result-actions">
+              <button type="button" id="copyBtn" class="ghost-button">复制结果</button>
+              <button type="button" id="saveBtn" class="ghost-button">保存到本地历史</button>
+            </div>
+          </div>
+
+          <div id="loadingBox" class="loading-box" hidden>
+            <span class="spinner"></span>
+            <p>正在分析岗位要求、能力差距和简历表达...</p>
+          </div>
+
+          <article id="resultContent" class="result-content empty">
+            <h3>等待生成</h3>
+            <p>填写左侧信息后，结果将展示在这里。</p>
+            <ul>
+              <li>岗位核心职责</li>
+              <li>能力关键词</li>
+              <li>能力匹配度</li>
+              <li>能力差距</li>
+              <li>简历改写建议</li>
+              <li>面试准备问题</li>
+              <li>下一步学习建议</li>
+            </ul>
+          </article>
+        </section>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="panel-header">
+          <h2>本地历史记录</h2>
+          <button type="button" id="clearHistoryBtn" class="ghost-button">清空历史</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
