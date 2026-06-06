@@ -84,3 +84,5 @@ Token 成本测算
 - [PRD 初稿](docs/prd.md)
 - [低保真原型设计](prototype/low-fidelity-wireframes.md)
 - [商业化分析](docs/commercialization.md)
+- [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
+- [简历项目描述与面试讲述稿](docs/resume-and-interview.md)
