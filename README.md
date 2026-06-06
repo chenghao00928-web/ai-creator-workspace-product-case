@@ -65,14 +65,20 @@ Token 成本测算
 ## 7. 当前进度
 
 - [x] AIGC 竞品分析初稿
-- [ ] 用户访谈
-- [ ] 用户痛点整理
-- [ ] 产品功能方案
+- [x] 用户访谈
+- [x] 用户痛点整理
+- [x] 需求优先级设计
+- [x] 产品功能方案
+- [x] PRD 初稿
 - [ ] 原型设计
 - [ ] Token 成本测算
 - [ ] 商业化套餐设计
-- [ ] 迭代优先级设计
+- [x] 迭代优先级设计
 
 ## 8. 已完成产出
 
 - [AIGC 竞品分析](docs/competitor-analysis.md)
+- [用户研究](docs/user-research.md)
+- [迭代优先级](docs/iteration-plan.md)
+- [产品方案报告](docs/product-report.md)
+- [PRD 初稿](docs/prd.md)
