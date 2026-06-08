@@ -43,6 +43,8 @@ ai-creator-workspace-product-case/
 
 ## 5. Demo 运行方式
 
+Demo 演示讲解和验收清单见：[Demo Walkthrough](docs/demo-walkthrough.md)。
+
 ### 5.1 安装依赖
 
 ```bash
@@ -115,9 +117,10 @@ POST /api/analyze-jd
 7. [Prompt 设计说明](docs/prompt-design.md)
 8. [大模型 API 接入说明](docs/api-integration.md)
 9. [AI 产品经理实习生 JD 分析案例](examples/ai-pm-intern-jd-case.md)
-10. [商业化分析](docs/commercialization.md)
-11. [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
-12. [简历项目描述与面试讲述稿](docs/resume-and-interview.md)
+10. [Demo 演示讲解与验收清单](docs/demo-walkthrough.md)
+11. [商业化分析](docs/commercialization.md)
+12. [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
+13. [简历项目描述与面试讲述稿](docs/resume-and-interview.md)
 
 ## 8. 面试讲述重点
 
@@ -150,6 +153,7 @@ POST /api/analyze-jd
 - [Prompt 设计说明](docs/prompt-design.md)
 - [大模型 API 接入说明](docs/api-integration.md)
 - [AI 产品经理实习生 JD 分析案例](examples/ai-pm-intern-jd-case.md)
+- [Demo 演示讲解与验收清单](docs/demo-walkthrough.md)
 - [商业化分析](docs/commercialization.md)
 - [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
 - [简历项目描述与面试讲述稿](docs/resume-and-interview.md)

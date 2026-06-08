@@ -24,21 +24,38 @@
 
 ### 2.2 模型价格参考
 
-本项目不绑定具体模型，商业化测算采用“低成本文本模型 + 高质量模型备选”的思路。
+本项目不绑定具体模型，商业化测算采用“低成本文本模型 + 高质量模型备选”的思路。为了让作品集体现更完整的成本意识，`data/token-cost-model.csv` 已补充项目中涉及的主要 AI 产品和可公开查询的 API 价格参考。
 
-| 模型参考 | 输入价格 | 输出价格 | 适用定位 |
-|---|---:|---:|---|
-| DeepSeek API 公开价格参考 | $0.14 / 1M tokens | $0.28 / 1M tokens | 低成本文本生成基准 |
-| DeepSeek v4-flash 价格参考字段 | 以 DeepSeek 官方当前价格页为准 | 以 DeepSeek 官方当前价格页为准 | Demo 默认模型，适合低成本快速验证 |
-| DeepSeek v4-pro 价格参考字段 | 以 DeepSeek 官方当前价格页为准 | 以 DeepSeek 官方当前价格页为准 | 后续高质量模型备选 |
-| OpenAI API 公开价格参考 | 以官方 API pricing 页面为准 | 以官方 API pricing 页面为准 | 高质量模型备选和国际化参考 |
+| 模型参考 | 输入价格 | 输出价格 | 币种 | 适用定位 |
+|---|---:|---:|---|---|
+| DeepSeek v4-flash | 0.14 / 1M tokens | 0.28 / 1M tokens | USD | Demo 默认低成本模型 |
+| DeepSeek v4-pro | 0.435 / 1M tokens | 0.87 / 1M tokens | USD | DeepSeek 高质量备选 |
+| OpenAI GPT-5.4 mini | 0.75 / 1M tokens | 4.50 / 1M tokens | USD | ChatGPT / OpenAI 成本参考 |
+| OpenAI GPT-5.4 | 2.50 / 1M tokens | 15.00 / 1M tokens | USD | 高质量国际模型参考 |
+| Claude Haiku 4.5 | 1.00 / 1M tokens | 5.00 / 1M tokens | USD | Claude 低成本参考 |
+| Claude Sonnet 4.6 | 3.00 / 1M tokens | 15.00 / 1M tokens | USD | Claude 高质量写作和长文参考 |
+| Gemini 2.5 Flash-Lite | 0.10 / 1M tokens | 0.40 / 1M tokens | USD | Gemini 低成本参考 |
+| Gemini 2.5 Flash | 0.30 / 1M tokens | 2.50 / 1M tokens | USD | Gemini 综合能力参考 |
+| Gemini 2.5 Pro | 1.25 / 1M tokens | 10.00 / 1M tokens | USD | Gemini 高质量参考，按 <= 200k prompts 口径 |
+| Kimi moonshot-v1-32k | 1.00 / 1M tokens | 3.00 / 1M tokens | USD | Kimi 长文本参考 |
+| Kimi K2.5 | 0.60 / 1M tokens | 3.00 / 1M tokens | USD | Kimi 多模态和长上下文参考，按 cache miss 口径 |
+| 通义千问 Qwen3.5-Plus | 0.115 / 1M tokens | 0.688 / 1M tokens | USD | 国内综合模型参考，按中国内地最低价口径 |
+| 通义千问 Qwen3-Max | 0.359 / 1M tokens | 1.434 / 1M tokens | USD | 国内高质量模型参考，按中国内地最低价口径 |
+| 豆包 1.5 Lite 32k | 0.30 / 1M tokens | 0.60 / 1M tokens | RMB | 国内低成本文本模型参考 |
+| 豆包 1.5 Pro 32k | 0.80 / 1M tokens | 2.00 / 1M tokens | RMB | 国内通用文本模型参考 |
 
 价格来源：
 
 - DeepSeek API Pricing：https://api-docs.deepseek.com/quick_start/pricing
 - OpenAI API Pricing：https://openai.com/api/pricing/
+- Anthropic Claude Pricing：https://www.anthropic.com/pricing
+- Google Gemini API Pricing：https://ai.google.dev/gemini-api/docs/pricing
+- Moonshot Kimi Pricing：https://platform.kimi.ai/docs/pricing/chat-v1
+- Moonshot Kimi K2.5 Pricing：https://platform.kimi.ai/docs/pricing/chat-k25
+- Alibaba Cloud Model Studio Pricing：https://www.alibabacloud.com/help/en/model-studio/models
+- Volcengine Ark Pricing：https://www.volcengine.com/docs/82379/1099320
 
-说明：真实 API 价格应以模型厂商当前价格页为准。真实上线时应按实际选型、缓存策略、上下文长度、模型折扣和平台账单重新测算，本文测算仅用于作品集项目中的商业化推演。
+说明：真实 API 价格应以模型厂商当前价格页为准。部分模型存在缓存命中、长上下文、思考模式、阶梯价、区域价和批量折扣，本文统一采用公开页中最容易复算的标准输入/输出 token 价格。即梦 AI 等视觉生成产品通常按图片、视频、点数或生成次数计费，不适合直接放入文本 token 成本表，后续如扩展视觉生成场景，应单独建立图片/视频生成成本表。
 
 ## 3. 单次任务 Token 成本测算
 
