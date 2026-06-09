@@ -1,8 +1,6 @@
 const form = document.querySelector("#analysisForm");
 const submitBtn = document.querySelector("#submitBtn");
 const clearBtn = document.querySelector("#clearBtn");
-const fillExampleBtn = document.querySelector("#fillExampleBtn");
-const navExampleBtn = document.querySelector("#navExampleBtn");
 const copyBtn = document.querySelector("#copyBtn");
 const saveBtn = document.querySelector("#saveBtn");
 const clearHistoryBtn = document.querySelector("#clearHistoryBtn");
@@ -12,73 +10,81 @@ const resultContent = document.querySelector("#resultContent");
 const historyList = document.querySelector("#historyList");
 const taskButtons = document.querySelectorAll("[data-task]");
 const modelOptions = document.querySelectorAll("[data-model]");
+const focusInputs = document.querySelectorAll(".checkbox-grid input");
+
+const targetRoleInput = document.querySelector("#targetRole");
+const jobDescriptionInput = document.querySelector("#jobDescription");
+const userBackgroundInput = document.querySelector("#userBackground");
+
 const modeTitle = document.querySelector("#modeTitle");
 const modeBadge = document.querySelector("#modeBadge");
 const modeDescription = document.querySelector("#modeDescription");
 const modeChips = document.querySelector("#modeChips");
+
+const metricJdChars = document.querySelector("#metricJdChars");
+const metricBgChars = document.querySelector("#metricBgChars");
+const metricModuleCount = document.querySelector("#metricModuleCount");
 const headlineCost = document.querySelector("#headlineCost");
+const headlineModel = document.querySelector("#headlineModel");
+const sideJdChars = document.querySelector("#sideJdChars");
+const sideBgChars = document.querySelector("#sideBgChars");
+const sideModuleCount = document.querySelector("#sideModuleCount");
 const costNote = document.querySelector("#costNote");
 const boardSaved = document.querySelector("#boardSaved");
+const boardCompleteness = document.querySelector("#boardCompleteness");
+const boardCompletenessText = document.querySelector("#boardCompletenessText");
+const boardMissing = document.querySelector("#boardMissing");
+const boardMissingText = document.querySelector("#boardMissingText");
+const boardResultReady = document.querySelector("#boardResultReady");
+const boardResultText = document.querySelector("#boardResultText");
+const taskChecklist = document.querySelector("#taskChecklist");
 
 const STORAGE_KEY = "ai-job-workspace-history";
 
-const sampleResultText = `# AI 求职分析示例
-## 匹配度评分
-78 / 100。岗位更看重结构化分析、用户洞察、Prompt 设计和把 AI 输出转成可执行文档的能力。
-## 能力要求
-- 产品分析
-- 用户研究
-- Prompt 设计
-- PRD 写作
-## 下一步行动
-- 把简历项目描述改成 STAR + 指标。
-- 准备 8 个基于项目的追问答案。
-- 补齐作品集 PDF 的截图与流程页。`;
-
-let currentResult = sampleResultText;
-
-const example = {
-  targetRole: "产品经理实习生",
-  jobDescription:
-    "岗位职责：参与产品需求分析、竞品调研、用户反馈整理和数据分析；协助设计求职工具类产品功能，推动原型、PRD 和上线验证。任职要求：理解用户需求，有用户研究和数据分析意识，能独立完成产品文档和竞品分析。",
-  userBackground:
-    "西安交通大学应用统计研一，本科工商管理，目标产品经理实习。具备统计和数据分析基础，正在补充 AI 工具与产品设计理解，已完成 AI 求职工作台作品集，包括竞品分析、用户访谈、PRD、低保真原型和 Token 成本测算。"
-};
+let currentResult = "";
+let currentModel = "deepseek";
+let hasGeneratedResult = false;
 
 const taskMeta = {
   jd: {
     title: "JD 解析",
     badge: "岗位理解",
+    focusValue: "JD 解析",
     description: "提取岗位职责、能力关键词和隐性要求，帮助用户先看懂岗位。",
     chips: ["岗位职责", "硬性要求", "隐性能力"]
   },
   resume: {
     title: "简历匹配",
     badge: "差距定位",
+    focusValue: "简历匹配",
     description: "把个人背景和 JD 对齐，识别可强化经历、表达短板和修改方向。",
     chips: ["匹配优势", "能力短板", "改写建议"]
   },
   competitor: {
     title: "竞品分析",
     badge: "产品视角",
-    description: "生成 AIGC / MaaS / AI 工具的竞品分析框架，用于作品集补充。",
+    focusValue: "竞品分析",
+    description: "基于目标岗位补充可展示的竞品分析框架和机会点。",
     chips: ["竞品矩阵", "机会点", "差异化"]
   },
   prd: {
     title: "PRD 初稿",
     badge: "文档沉淀",
+    focusValue: "PRD 初稿",
     description: "把功能需求转成页面结构、字段、状态、异常和验收标准。",
     chips: ["功能范围", "页面结构", "验收标准"]
   },
   interview: {
     title: "面试问题",
     badge: "面试准备",
+    focusValue: "面试问题",
     description: "基于 JD 和简历生成个性化追问，覆盖行为题、项目题和产品题。",
     chips: ["高频问题", "项目追问", "回答提纲"]
   },
   qa: {
     title: "输出质检",
     badge: "质量控制",
+    focusValue: "输出质量检查",
     description: "检查 AI 输出是否空泛、结构是否完整、建议是否可执行。",
     chips: ["结构完整", "可执行", "避免空话"]
   }
@@ -86,29 +92,86 @@ const taskMeta = {
 
 const modelMeta = {
   deepseek: {
-    cost: "0.0345 RMB",
-    note: "DeepSeek V4 Pro 标准任务：2000 input + 1200 output tokens，含成本安全系数。"
+    label: "DeepSeek",
+    standardCost: 0.0345,
+    note: "按当前 JD、个人背景和输出模块数量估算。实际费用会受模型、重试、输出长度影响。"
   },
   kimi: {
-    cost: "0.0580 RMB",
-    note: "Kimi 标准任务估算：适合长文本 JD 与简历材料处理。"
+    label: "Kimi",
+    standardCost: 0.058,
+    note: "适合长文本 JD 与简历材料处理，当前费用按输入规模动态估算。"
   },
   gpt: {
-    cost: "0.1242 RMB",
-    note: "GPT 标准任务估算：适合结构化输出和复杂文档生成。"
+    label: "GPT",
+    standardCost: 0.1242,
+    note: "适合结构化输出和复杂文档生成，当前费用按输入规模动态估算。"
   },
   claude: {
-    cost: "0.1460 RMB",
-    note: "Claude 标准任务估算：适合长文档摘要、PRD 和分析报告。"
+    label: "Claude",
+    standardCost: 0.146,
+    note: "适合长文档摘要、PRD 和分析报告，当前费用按输入规模动态估算。"
   },
   gemini: {
-    cost: "0.0710 RMB",
-    note: "Gemini 标准任务估算：适合多模态扩展和轻量分析。"
+    label: "Gemini",
+    standardCost: 0.071,
+    note: "适合后续多模态扩展，当前费用按输入规模动态估算。"
   }
 };
 
 function getFocusAreas() {
-  return [...document.querySelectorAll(".checkbox-grid input:checked")].map((item) => item.value);
+  return [...focusInputs].filter((item) => item.checked).map((item) => item.value);
+}
+
+function getPlainLength(value) {
+  return value.replace(/\s+/g, "").length;
+}
+
+function estimateCost() {
+  const jdChars = getPlainLength(jobDescriptionInput.value);
+  const bgChars = getPlainLength(userBackgroundInput.value);
+  const moduleCount = getFocusAreas().length || 1;
+  if (jdChars + bgChars === 0) return 0;
+  const estimatedTokens = Math.ceil((jdChars + bgChars) * 0.75 + moduleCount * 420);
+  const normalizedTaskCount = Math.max(estimatedTokens / 3200, 0);
+  return modelMeta[currentModel].standardCost * normalizedTaskCount;
+}
+
+function updateWorkspaceState() {
+  const targetFilled = Boolean(targetRoleInput.value.trim());
+  const jdChars = getPlainLength(jobDescriptionInput.value);
+  const bgChars = getPlainLength(userBackgroundInput.value);
+  const selectedModules = getFocusAreas();
+  const missingItems = [];
+
+  if (!targetFilled) missingItems.push("目标岗位");
+  if (!jdChars) missingItems.push("岗位 JD");
+  if (!bgChars) missingItems.push("个人背景");
+
+  const completeness = Math.round(((3 - missingItems.length) / 3) * 100);
+  const cost = estimateCost();
+
+  metricJdChars.textContent = `${jdChars} 字`;
+  metricBgChars.textContent = `${bgChars} 字`;
+  metricModuleCount.textContent = `${selectedModules.length} 项`;
+  headlineCost.textContent = `${cost.toFixed(4)} RMB`;
+  headlineModel.textContent = modelMeta[currentModel].label;
+  sideJdChars.textContent = String(jdChars);
+  sideBgChars.textContent = String(bgChars);
+  sideModuleCount.textContent = String(selectedModules.length);
+  boardCompleteness.textContent = `${completeness}%`;
+  boardCompletenessText.textContent = completeness === 100 ? "可以生成分析" : "还需要补充输入";
+  boardMissing.textContent = String(missingItems.length);
+  boardMissingText.textContent = missingItems.length ? missingItems.join("、") : "输入已完整";
+  boardResultReady.textContent = hasGeneratedResult ? "1" : "0";
+  boardResultText.textContent = hasGeneratedResult ? "已有可复制/保存结果" : "尚未生成";
+
+  taskChecklist.innerHTML = [...focusInputs]
+    .map((item) => {
+      const checkedClass = item.checked ? "checked" : "";
+      const state = item.checked ? "已选" : "未选";
+      return `<span class="${checkedClass}"><b>${item.value}</b><em>${state}</em></span>`;
+    })
+    .join("");
 }
 
 function showError(message) {
@@ -127,13 +190,6 @@ function setLoading(isLoading) {
   submitBtn.textContent = isLoading ? "生成中..." : "生成分析";
 }
 
-function fillExample() {
-  document.querySelector("#targetRole").value = example.targetRole;
-  document.querySelector("#jobDescription").value = example.jobDescription;
-  document.querySelector("#userBackground").value = example.userBackground;
-  document.querySelector("#demo").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
 function setTask(task) {
   const meta = taskMeta[task] || taskMeta.jd;
   taskButtons.forEach((button) => button.classList.toggle("active", button.dataset.task === task));
@@ -141,13 +197,17 @@ function setTask(task) {
   modeBadge.textContent = meta.badge;
   modeDescription.textContent = meta.description;
   modeChips.innerHTML = meta.chips.map((chip) => `<span>${chip}</span>`).join("");
+
+  const matchedInput = [...focusInputs].find((item) => item.value === meta.focusValue);
+  if (matchedInput) matchedInput.checked = true;
+  updateWorkspaceState();
 }
 
 function setModel(model) {
-  const meta = modelMeta[model] || modelMeta.deepseek;
-  modelOptions.forEach((button) => button.classList.toggle("active", button.dataset.model === model));
-  headlineCost.textContent = meta.cost;
-  costNote.textContent = meta.note;
+  currentModel = modelMeta[model] ? model : "deepseek";
+  modelOptions.forEach((button) => button.classList.toggle("active", button.dataset.model === currentModel));
+  costNote.textContent = modelMeta[currentModel].note;
+  updateWorkspaceState();
 }
 
 function renderMarkdownLike(text) {
@@ -169,52 +229,17 @@ function renderMarkdownLike(text) {
   return `<div class="generated-markdown"><p>${html}</p></div>`;
 }
 
-function renderSampleResult() {
-  currentResult = sampleResultText;
-  resultContent.classList.remove("empty");
+function renderEmptyResult() {
+  hasGeneratedResult = false;
+  currentResult = "";
+  resultContent.classList.add("empty");
   resultContent.innerHTML = `
-    <div class="score-overview">
-      <div>
-        <span>匹配度评分</span>
-        <strong>78</strong>
-        <em>/ 100</em>
-      </div>
-      <p>岗位更看重结构化分析、用户洞察、Prompt 设计和把 AI 输出转成可执行文档的能力。</p>
-    </div>
-    <div class="output-grid">
-      <section>
-        <h3>能力要求</h3>
-        <div class="tag-list">
-          <span>产品分析</span>
-          <span>用户研究</span>
-          <span>Prompt 设计</span>
-          <span>PRD 写作</span>
-        </div>
-      </section>
-      <section>
-        <h3>匹配优势</h3>
-        <ul>
-          <li>已有 AI 求职工作台项目，可对应岗位中的文档协作与流程优化。</li>
-          <li>统计背景可支撑用户反馈归类、指标设计和效果评估。</li>
-        </ul>
-      </section>
-      <section>
-        <h3>能力短板</h3>
-        <ul>
-          <li>需要把项目经历写成更明确的输入、处理、输出链路。</li>
-          <li>补充真实竞品拆解和成本测算结论。</li>
-        </ul>
-      </section>
-      <section>
-        <h3>下一步行动</h3>
-        <ol>
-          <li>把简历项目描述改成 STAR + 指标。</li>
-          <li>准备 8 个基于项目的追问答案。</li>
-          <li>补齐作品集 PDF 的截图与流程页。</li>
-        </ol>
-      </section>
+    <div class="empty-state">
+      <h3>等待生成结果</h3>
+      <p>填写岗位 JD 和个人背景后点击“生成分析”，这里会展示真实接口返回的分析内容。</p>
     </div>
   `;
+  updateWorkspaceState();
 }
 
 function readHistory() {
@@ -229,15 +254,14 @@ function writeHistory(items) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, 10)));
 }
 
-function updateBoard() {
-  const count = readHistory().length;
-  boardSaved.textContent = String(count);
+function updateSavedCount() {
+  boardSaved.textContent = String(readHistory().length);
 }
 
 function renderHistory() {
   const items = readHistory();
   historyList.innerHTML = "";
-  updateBoard();
+  updateSavedCount();
 
   if (!items.length) {
     historyList.innerHTML = `
@@ -266,9 +290,9 @@ form.addEventListener("submit", async (event) => {
   setLoading(true);
 
   const payload = {
-    targetRole: document.querySelector("#targetRole").value.trim(),
-    jobDescription: document.querySelector("#jobDescription").value.trim(),
-    userBackground: document.querySelector("#userBackground").value.trim(),
+    targetRole: targetRoleInput.value.trim(),
+    jobDescription: jobDescriptionInput.value.trim(),
+    userBackground: userBackgroundInput.value.trim(),
     focusAreas: getFocusAreas()
   };
 
@@ -286,26 +310,25 @@ form.addEventListener("submit", async (event) => {
     }
 
     currentResult = data.result;
+    hasGeneratedResult = true;
     resultContent.classList.remove("empty");
     resultContent.innerHTML = renderMarkdownLike(currentResult);
   } catch (error) {
     showError(error.message);
   } finally {
     setLoading(false);
+    updateWorkspaceState();
   }
 });
 
 clearBtn.addEventListener("click", () => {
   form.reset();
-  document.querySelectorAll(".checkbox-grid input").forEach((item, index) => {
+  focusInputs.forEach((item, index) => {
     item.checked = [0, 1, 4].includes(index);
   });
   hideError();
-  renderSampleResult();
+  renderEmptyResult();
 });
-
-fillExampleBtn.addEventListener("click", fillExample);
-navExampleBtn?.addEventListener("click", fillExample);
 
 taskButtons.forEach((button) => {
   button.addEventListener("click", () => setTask(button.dataset.task));
@@ -315,9 +338,14 @@ modelOptions.forEach((button) => {
   button.addEventListener("click", () => setModel(button.dataset.model));
 });
 
+[targetRoleInput, jobDescriptionInput, userBackgroundInput, ...focusInputs].forEach((item) => {
+  item.addEventListener("input", updateWorkspaceState);
+  item.addEventListener("change", updateWorkspaceState);
+});
+
 copyBtn.addEventListener("click", async () => {
   if (!currentResult) {
-    showError("当前没有可复制的分析结果。");
+    showError("当前没有可复制的分析结果。请先生成分析。");
     return;
   }
 
@@ -330,11 +358,11 @@ copyBtn.addEventListener("click", async () => {
 
 saveBtn.addEventListener("click", () => {
   if (!currentResult) {
-    showError("当前没有可保存的分析结果。");
+    showError("当前没有可保存的分析结果。请先生成分析。");
     return;
   }
 
-  const targetRole = document.querySelector("#targetRole").value.trim() || "示例岗位分析";
+  const targetRole = targetRoleInput.value.trim() || "未命名岗位分析";
   const history = readHistory();
   history.unshift({
     targetRole,
@@ -353,8 +381,10 @@ historyList.addEventListener("click", (event) => {
   if (!item) return;
 
   currentResult = item.result;
+  hasGeneratedResult = true;
   resultContent.classList.remove("empty");
   resultContent.innerHTML = renderMarkdownLike(currentResult);
+  updateWorkspaceState();
 });
 
 clearHistoryBtn.addEventListener("click", () => {
@@ -362,4 +392,6 @@ clearHistoryBtn.addEventListener("click", () => {
   renderHistory();
 });
 
+setModel(currentModel);
 renderHistory();
+renderEmptyResult();

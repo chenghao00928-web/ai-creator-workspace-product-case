@@ -166,35 +166,24 @@ a {
   letter-spacing: 0;
 }
 
-.mini-progress {
-  height: 8px;
-  margin: 12px 0;
-  border-radius: 99px;
-  background: #edf2f7;
-  overflow: hidden;
+.input-summary {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
 }
 
-.mini-progress span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--brand), var(--green));
-}
-
-.sidebar-stats {
+.input-summary span {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-.sidebar-stats strong {
-  color: var(--ink);
-  font-size: 28px;
-}
-
-.sidebar-stats span {
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   color: var(--muted);
   font-size: 13px;
+}
+
+.input-summary strong {
+  color: var(--ink);
+  font-size: 15px;
 }
 
 .workspace {
@@ -572,9 +561,6 @@ textarea:focus {
 }
 
 .output-grid section,
-.result-content h2,
-.result-content h3,
-.result-content h4,
 .generated-markdown {
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -613,6 +599,23 @@ textarea:focus {
   background: #f8fafc;
 }
 
+.empty-state {
+  padding: 22px;
+  border: 1px dashed #b8c7dc;
+  border-radius: var(--radius);
+  background: #f8fafc;
+}
+
+.empty-state h3 {
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 .board-list {
   display: grid;
   gap: 10px;
@@ -637,6 +640,45 @@ textarea:focus {
 
 .board-list p {
   margin: 0;
+}
+
+.task-checklist {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.task-checklist span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.task-checklist b {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.task-checklist em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.task-checklist span.checked {
+  border-color: rgba(5, 150, 105, 0.26);
+  background: #f0fdf4;
+}
+
+.task-checklist span.checked em {
+  color: var(--green);
+  font-weight: 800;
 }
 
 .model-list {
@@ -709,10 +751,6 @@ textarea:focus {
 
   .task-nav {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .sidebar-card {
-    display: none;
   }
 
   .workspace-grid {
