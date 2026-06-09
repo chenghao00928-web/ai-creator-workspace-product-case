@@ -7,295 +7,317 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header class="site-header">
-      <nav class="nav-shell" aria-label="主导航">
-        <a class="brand" href="#hero" aria-label="AI 求职工作台首页">
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="任务导航">
+        <a class="brand" href="#demo" aria-label="AI 求职工作台">
           <span class="brand-mark">AI</span>
           <span>
             <strong>AI 求职工作台</strong>
-            <em>让 JD 分析、简历优化和面试准备更高效</em>
+            <em>JD 到求职方案</em>
           </span>
         </a>
-        <div class="nav-actions">
-          <a class="text-link" href="#demo">查看 Demo</a>
-          <a class="text-link" href="https://github.com/chenghao00928-web/ai-creator-workspace-product-case" target="_blank" rel="noreferrer">GitHub</a>
-          <button type="button" id="navExampleBtn" class="nav-button">使用示例</button>
-        </div>
-      </nav>
-    </header>
 
-    <main>
-      <section id="hero" class="hero-section">
-        <div class="hero-shell">
-          <div class="hero-copy">
-            <p class="eyebrow">AI Job Workspace</p>
-            <h1>AI 求职工作台</h1>
-            <p class="hero-subtitle">
-              面向求职学生的 AI 产品 Demo，支持 JD 解析、简历匹配、竞品分析、PRD 初稿和面试问题生成，帮助用户完成从岗位理解到求职准备的完整工作流。
-            </p>
-            <div class="hero-actions">
-              <a class="primary-button" href="#demo">开始体验</a>
-              <a class="secondary-button" href="#highlights">查看项目说明</a>
-            </div>
-            <div class="trust-row" aria-label="项目能力">
-              <span>Prompt 模板库</span>
-              <span>DeepSeek API</span>
-              <span>Token 成本测算</span>
-            </div>
+        <nav class="task-nav" aria-label="分析任务">
+          <button type="button" class="task-button active" data-task="jd">
+            <span>JD</span>
+            <strong>JD 解析</strong>
+          </button>
+          <button type="button" class="task-button" data-task="resume">
+            <span>CV</span>
+            <strong>简历匹配</strong>
+          </button>
+          <button type="button" class="task-button" data-task="competitor">
+            <span>CA</span>
+            <strong>竞品分析</strong>
+          </button>
+          <button type="button" class="task-button" data-task="prd">
+            <span>PRD</span>
+            <strong>PRD 初稿</strong>
+          </button>
+          <button type="button" class="task-button" data-task="interview">
+            <span>Q</span>
+            <strong>面试问题</strong>
+          </button>
+          <button type="button" class="task-button" data-task="qa">
+            <span>QA</span>
+            <strong>输出质检</strong>
+          </button>
+        </nav>
+
+        <div class="sidebar-card">
+          <p class="muted-label">今日进度</p>
+          <div class="mini-progress">
+            <span style="width: 68%"></span>
           </div>
+          <div class="sidebar-stats">
+            <strong>4</strong>
+            <span>个任务待推进</span>
+          </div>
+        </div>
+      </aside>
 
-          <aside class="hero-preview" aria-label="AI 输出预览">
-            <div class="preview-header">
-              <span class="preview-dot"></span>
-              <strong>岗位分析预览</strong>
-            </div>
-            <div class="score-card">
-              <span>岗位匹配度</span>
-              <strong>78 / 100</strong>
-              <div class="score-bar"><i></i></div>
-            </div>
-            <div class="preview-grid">
-              <article>
-                <span>核心能力要求</span>
-                <strong>产品分析、用户研究、Prompt 设计</strong>
+      <main id="demo" class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">AI Job Workspace</p>
+            <h1>让 JD 分析、简历优化和面试准备更高效</h1>
+          </div>
+          <div class="topbar-actions">
+            <button type="button" id="navExampleBtn" class="secondary-button">填入示例</button>
+            <a class="ghost-button" href="https://github.com/chenghao00928-web/ai-creator-workspace-product-case" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="primary-button" href="#analysisForm">查看 Demo</a>
+          </div>
+        </header>
+
+        <section class="metric-strip" aria-label="工作台概览">
+          <article>
+            <span>岗位匹配度</span>
+            <strong>78 / 100</strong>
+            <em>示例预览</em>
+          </article>
+          <article>
+            <span>能力关键词</span>
+            <strong>12</strong>
+            <em>已提取</em>
+          </article>
+          <article>
+            <span>面试题</span>
+            <strong>8</strong>
+            <em>可生成</em>
+          </article>
+          <article>
+            <span>预估成本</span>
+            <strong id="headlineCost">0.0345 RMB</strong>
+            <em>DeepSeek V4 Pro</em>
+          </article>
+        </section>
+
+        <div class="workspace-grid">
+          <section class="main-column">
+            <section class="panel mode-panel">
+              <div class="panel-header compact">
+                <div>
+                  <p class="section-kicker">Current Task</p>
+                  <h2 id="modeTitle">JD 解析</h2>
+                </div>
+                <span id="modeBadge" class="status-chip">岗位理解</span>
+              </div>
+              <p id="modeDescription" class="mode-description">提取岗位职责、能力关键词和隐性要求，帮助用户先看懂岗位。</p>
+              <div id="modeChips" class="chip-row">
+                <span>岗位职责</span>
+                <span>硬性要求</span>
+                <span>隐性能力</span>
+              </div>
+            </section>
+
+            <form id="analysisForm" class="panel form-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-kicker">Input</p>
+                  <h2>输入求职信息</h2>
+                </div>
+                <button type="button" id="fillExampleBtn" class="secondary-button">使用示例</button>
+              </div>
+
+              <div class="form-grid">
+                <label>
+                  目标岗位
+                  <input
+                    id="targetRole"
+                    name="targetRole"
+                    type="text"
+                    placeholder="例如：产品经理实习生"
+                    required
+                  />
+                </label>
+
+                <label>
+                  分析深度
+                  <select id="analysisDepth" name="analysisDepth">
+                    <option>快速定位</option>
+                    <option selected>标准分析</option>
+                    <option>作品集级拆解</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                岗位 JD
+                <textarea
+                  id="jobDescription"
+                  name="jobDescription"
+                  rows="7"
+                  placeholder="粘贴岗位职责、任职要求、加分项等..."
+                  required
+                ></textarea>
+              </label>
+
+              <label>
+                个人背景
+                <textarea
+                  id="userBackground"
+                  name="userBackground"
+                  rows="5"
+                  placeholder="例如：学校、专业、项目经历、技能、求职方向..."
+                  required
+                ></textarea>
+              </label>
+
+              <fieldset>
+                <legend>输出模块</legend>
+                <div class="checkbox-grid">
+                  <label><input type="checkbox" value="JD 解析" checked /> JD 解析</label>
+                  <label><input type="checkbox" value="简历匹配" checked /> 简历匹配</label>
+                  <label><input type="checkbox" value="竞品分析" /> 竞品分析</label>
+                  <label><input type="checkbox" value="PRD 初稿" /> PRD 初稿</label>
+                  <label><input type="checkbox" value="面试问题" checked /> 面试问题</label>
+                  <label><input type="checkbox" value="输出质量检查" /> 输出质检</label>
+                </div>
+              </fieldset>
+
+              <div class="actions">
+                <button type="submit" id="submitBtn" class="primary-button">生成分析</button>
+                <button type="button" id="clearBtn" class="secondary-button">清空内容</button>
+                <p id="errorBox" class="error-box" hidden></p>
+              </div>
+            </form>
+
+            <section class="panel result-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-kicker">Structured Output</p>
+                  <h2>结果洞察</h2>
+                </div>
+                <div class="result-actions">
+                  <button type="button" id="copyBtn" class="ghost-button">复制</button>
+                  <button type="button" id="saveBtn" class="ghost-button">保存</button>
+                </div>
+              </div>
+
+              <div id="loadingBox" class="loading-box" hidden>
+                <span class="spinner"></span>
+                <p>正在分析岗位要求、能力差距和简历表达...</p>
+              </div>
+
+              <article id="resultContent" class="result-content">
+                <div class="score-overview">
+                  <div>
+                    <span>匹配度评分</span>
+                    <strong>78</strong>
+                    <em>/ 100</em>
+                  </div>
+                  <p>岗位更看重结构化分析、用户洞察、Prompt 设计和把 AI 输出转成可执行文档的能力。</p>
+                </div>
+                <div class="output-grid">
+                  <section>
+                    <h3>能力要求</h3>
+                    <div class="tag-list">
+                      <span>产品分析</span>
+                      <span>用户研究</span>
+                      <span>Prompt 设计</span>
+                      <span>PRD 写作</span>
+                    </div>
+                  </section>
+                  <section>
+                    <h3>匹配优势</h3>
+                    <ul>
+                      <li>已有 AI 求职工作台项目，可对应岗位中的文档协作与流程优化。</li>
+                      <li>统计背景可支撑用户反馈归类、指标设计和效果评估。</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>能力短板</h3>
+                    <ul>
+                      <li>需要把项目经历写成更明确的输入、处理、输出链路。</li>
+                      <li>补充真实竞品拆解和成本测算结论。</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <h3>下一步行动</h3>
+                    <ol>
+                      <li>把简历项目描述改成 STAR + 指标。</li>
+                      <li>准备 8 个基于项目的追问答案。</li>
+                      <li>补齐作品集 PDF 的截图与流程页。</li>
+                    </ol>
+                  </section>
+                </div>
               </article>
-              <article>
-                <span>简历优化建议</span>
-                <strong>补充 AIGC 项目经历与指标</strong>
-              </article>
-              <article>
-                <span>面试准备</span>
-                <strong>生成 8 个高频问题</strong>
-              </article>
-            </div>
+            </section>
+          </section>
+
+          <aside class="right-rail" aria-label="项目洞察">
+            <section class="panel board-panel">
+              <div class="panel-header compact">
+                <div>
+                  <p class="section-kicker">Project Board</p>
+                  <h2>求职看板</h2>
+                </div>
+              </div>
+              <div class="board-list">
+                <article>
+                  <span class="status-chip blue">已分析岗位</span>
+                  <strong id="boardAnalyzed">3</strong>
+                  <p>小米、字节、阿里云</p>
+                </article>
+                <article>
+                  <span class="status-chip amber">简历待优化</span>
+                  <strong id="boardResume">2</strong>
+                  <p>项目指标、工具链表达</p>
+                </article>
+                <article>
+                  <span class="status-chip green">面试待准备</span>
+                  <strong id="boardInterview">8</strong>
+                  <p>行为题 + 项目深挖</p>
+                </article>
+                <article>
+                  <span class="status-chip">已保存结果</span>
+                  <strong id="boardSaved">0</strong>
+                  <p>localStorage 轻量归档</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel cost-panel">
+              <div class="panel-header compact">
+                <div>
+                  <p class="section-kicker">Model Cost</p>
+                  <h2>模型与成本</h2>
+                </div>
+              </div>
+              <div class="model-list" aria-label="模型选择">
+                <button type="button" class="model-option active" data-model="deepseek">
+                  <span>DeepSeek</span><strong>0.0345 RMB</strong>
+                </button>
+                <button type="button" class="model-option" data-model="kimi">
+                  <span>Kimi</span><strong>0.0580 RMB</strong>
+                </button>
+                <button type="button" class="model-option" data-model="gpt">
+                  <span>GPT</span><strong>0.1242 RMB</strong>
+                </button>
+                <button type="button" class="model-option" data-model="claude">
+                  <span>Claude</span><strong>0.1460 RMB</strong>
+                </button>
+                <button type="button" class="model-option" data-model="gemini">
+                  <span>Gemini</span><strong>0.0710 RMB</strong>
+                </button>
+              </div>
+              <p id="costNote" class="cost-note">标准任务：2000 input + 1200 output tokens，含成本安全系数。</p>
+            </section>
+
+            <section class="panel history-panel">
+              <div class="panel-header compact">
+                <div>
+                  <p class="section-kicker">Archive</p>
+                  <h2>本地历史</h2>
+                </div>
+                <button type="button" id="clearHistoryBtn" class="ghost-button small">清空</button>
+              </div>
+              <div id="historyList" class="history-list"></div>
+            </section>
           </aside>
         </div>
-      </section>
-
-      <section class="section-shell" aria-labelledby="featuresTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Core Features</p>
-          <h2 id="featuresTitle">核心功能模块</h2>
-          <p>把求职准备拆成可操作的 AI 工作流，降低输入门槛，也让输出更容易复用。</p>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <span class="feature-icon">JD</span>
-            <h3>JD 解析</h3>
-            <p>提取岗位职责、能力关键词和隐性要求。</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">CV</span>
-            <h3>简历匹配</h3>
-            <p>根据候选人背景分析匹配点、短板和修改方向。</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">CA</span>
-            <h3>竞品分析</h3>
-            <p>生成 AIGC、MaaS、AI 产品竞品分析框架。</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">PRD</span>
-            <h3>PRD 初稿</h3>
-            <p>根据功能需求生成产品文档初稿。</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">Q</span>
-            <h3>面试问题生成</h3>
-            <p>基于 JD 和简历生成个性化面试题。</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">QA</span>
-            <h3>输出质量检查</h3>
-            <p>检查 AI 输出是否空泛、结构完整、可执行。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-shell workflow-section" aria-labelledby="workflowTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Workflow</p>
-          <h2 id="workflowTitle">从输入到可执行求职方案</h2>
-        </div>
-        <div class="workflow-board">
-          <article>
-            <span>01 输入</span>
-            <h3>岗位 JD + 个人背景 + 目标岗位</h3>
-            <p>把零散信息收敛成稳定字段，减少自由 Prompt 带来的不确定性。</p>
-          </article>
-          <article>
-            <span>02 处理</span>
-            <h3>Prompt 模板库 + Agent 工作流 + 质量检查</h3>
-            <p>按任务类型组织提示词，控制输出结构，并预留人工核验边界。</p>
-          </article>
-          <article>
-            <span>03 输出</span>
-            <h3>岗位分析报告 + 简历建议 + 面试问题</h3>
-            <p>生成可复制、可保存、可继续改写的结构化求职材料。</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="demo" class="section-shell demo-section" aria-labelledby="demoTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Interactive Demo</p>
-          <h2 id="demoTitle">Demo 操作区</h2>
-          <p>保留现有 API 调用、复制、保存历史逻辑，仅优化输入输出体验。</p>
-        </div>
-
-        <div class="demo-layout">
-          <form id="analysisForm" class="panel form-panel">
-            <div class="panel-header">
-              <div>
-                <p class="section-kicker">Input</p>
-                <h3>输入求职信息</h3>
-              </div>
-              <button type="button" id="fillExampleBtn" class="ghost-button">填入示例</button>
-            </div>
-
-            <label>
-              目标岗位
-              <input
-                id="targetRole"
-                name="targetRole"
-                type="text"
-                placeholder="例如：产品经理实习生"
-                required
-              />
-            </label>
-
-            <label>
-              岗位 JD
-              <textarea
-                id="jobDescription"
-                name="jobDescription"
-                rows="8"
-                placeholder="粘贴岗位职责、任职要求、加分项等..."
-                required
-              ></textarea>
-            </label>
-
-            <label>
-              个人背景
-              <textarea
-                id="userBackground"
-                name="userBackground"
-                rows="6"
-                placeholder="例如：学校、专业、项目经历、技能、求职方向..."
-                required
-              ></textarea>
-            </label>
-
-            <fieldset>
-              <legend>选择分析类型</legend>
-              <div class="checkbox-grid">
-                <label><input type="checkbox" value="JD 解析" checked /> JD 解析</label>
-                <label><input type="checkbox" value="简历匹配" checked /> 简历匹配</label>
-                <label><input type="checkbox" value="竞品分析" /> 竞品分析</label>
-                <label><input type="checkbox" value="PRD 初稿" /> PRD 初稿</label>
-                <label><input type="checkbox" value="面试问题" checked /> 面试问题</label>
-                <label><input type="checkbox" value="输出质量检查" /> 输出质量检查</label>
-              </div>
-            </fieldset>
-
-            <div class="actions">
-              <button type="submit" id="submitBtn" class="primary-button">生成分析</button>
-              <button type="button" id="clearBtn" class="secondary-button">清空内容</button>
-            </div>
-
-            <p id="errorBox" class="error-box" hidden></p>
-          </form>
-
-          <section class="panel result-panel">
-            <div class="panel-header">
-              <div>
-                <p class="section-kicker">Output</p>
-                <h3>输出结果</h3>
-              </div>
-              <div class="result-actions">
-                <button type="button" id="copyBtn" class="ghost-button">复制结果</button>
-                <button type="button" id="saveBtn" class="ghost-button">保存到本地历史</button>
-              </div>
-            </div>
-
-            <div class="result-summary">
-              <article>
-                <span>匹配度评分</span>
-                <strong>待生成</strong>
-              </article>
-              <article>
-                <span>分析模块</span>
-                <strong>6 项</strong>
-              </article>
-              <article>
-                <span>结果资产</span>
-                <strong>可保存</strong>
-              </article>
-            </div>
-
-            <div id="loadingBox" class="loading-box" hidden>
-              <span class="spinner"></span>
-              <p>正在分析岗位要求、能力差距和简历表达...</p>
-            </div>
-
-            <article id="resultContent" class="result-content empty">
-              <div class="result-placeholder">
-                <h3>等待生成</h3>
-                <p>填写左侧信息后，结果会按卡片分块展示在这里。</p>
-              </div>
-              <div class="empty-grid">
-                <span>匹配度评分</span>
-                <span>能力要求</span>
-                <span>匹配优势</span>
-                <span>能力短板</span>
-                <span>简历修改建议</span>
-                <span>面试问题</span>
-                <span>下一步行动建议</span>
-              </div>
-            </article>
-          </section>
-        </div>
-
-        <section class="panel history-panel">
-          <div class="panel-header">
-            <div>
-              <p class="section-kicker">Archive</p>
-              <h3>本地历史记录</h3>
-            </div>
-            <button type="button" id="clearHistoryBtn" class="ghost-button">清空历史</button>
-          </div>
-          <div id="historyList" class="history-list"></div>
-        </section>
-      </section>
-
-      <section id="highlights" class="section-shell" aria-labelledby="highlightsTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Project Highlights</p>
-          <h2 id="highlightsTitle">项目亮点</h2>
-          <p>这不只是一个聊天页面，而是包含研究、设计、接口、成本和质量评估的完整 AI 产品 Demo。</p>
-        </div>
-        <div class="highlight-grid">
-          <span>Prompt 模板库</span>
-          <span>Agent 工作流设计</span>
-          <span>用户研究思路</span>
-          <span>竞品分析框架</span>
-          <span>Token 成本测算</span>
-          <span>产品文档沉淀</span>
-          <span>输出质量评估标准</span>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div>
-        <strong>AI 求职工作台</strong>
-        <p>面向求职学生的 AI 产品 Demo，用结构化工作流提升求职准备效率。</p>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/chenghao00928-web/ai-creator-workspace-product-case" target="_blank" rel="noreferrer">GitHub 项目</a>
-        <span>作者信息占位</span>
-      </div>
-    </footer>
+      </main>
+    </div>
 
     <script src="./script.js"></script>
   </body>
