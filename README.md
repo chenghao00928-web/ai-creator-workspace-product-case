@@ -32,7 +32,7 @@
 
 ```text
 ai-creator-workspace-product-case/
-├── docs/          # 竞品分析、用户研究、产品报告、PRD、API 接入、商业化、AI 工作流案例
+├── docs/          # 竞品分析、用户研究、产品报告、PRD、API 接入、商业化
 ├── data/          # Token 成本测算表
 ├── demo/          # AI 求职工作台前端 Demo
 ├── server/        # Node.js + Express 后端接口
@@ -43,8 +43,6 @@ ai-creator-workspace-product-case/
 ```
 
 ## 5. Demo 运行方式
-
-Demo 演示讲解和验收清单见：[Demo Walkthrough](docs/demo-walkthrough.md)。
 
 ![AI 求职工作台 Demo 首页](assets/demo-workspace-home.png)
 
@@ -120,12 +118,9 @@ POST /api/analyze-jd
 7. [Prompt 设计说明](docs/prompt-design.md)
 8. [大模型 API 接入说明](docs/api-integration.md)
 9. [AI 产品经理实习生 JD 分析案例](examples/ai-pm-intern-jd-case.md)
-10. [Demo 演示讲解与验收清单](docs/demo-walkthrough.md)
-11. [小米 AI 产品经理实习岗位匹配案例](docs/xiaomi-ai-workflow-case.md)
-12. [Prompt 模板库](docs/prompt-template-library.md)
-13. [商业化分析](docs/commercialization.md)
-14. [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
-15. [简历项目描述与面试讲述稿](docs/resume-and-interview.md)
+10. [Prompt 模板库](docs/prompt-template-library.md)
+11. [商业化分析](docs/commercialization.md)
+12. [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
 
 ## 8. 面试讲述重点
 
@@ -145,7 +140,6 @@ POST /api/analyze-jd
 - 我不是只写了一个产品分析报告，而是把项目做成了能运行的 AI Demo。
 - 我理解 AI 产品不仅要会设计功能，还要考虑 Prompt、API Key 安全、模型成本、输出结构和异常处理。
 - 我将个人背景和求职目标结合，设计了适合 AI 产品经理实习投递的作品集项目。
-- 面向小米这类 AI 工作流岗位，我进一步沉淀了 Prompt 模板库、SOP、质量评估标准和批量 JD 分析脚本。
 
 ## 9. 已完成产出
 
@@ -159,9 +153,6 @@ POST /api/analyze-jd
 - [Prompt 设计说明](docs/prompt-design.md)
 - [大模型 API 接入说明](docs/api-integration.md)
 - [AI 产品经理实习生 JD 分析案例](examples/ai-pm-intern-jd-case.md)
-- [Demo 演示讲解与验收清单](docs/demo-walkthrough.md)
-- [小米 AI 产品经理实习岗位匹配案例](docs/xiaomi-ai-workflow-case.md)
 - [Prompt 模板库](docs/prompt-template-library.md)
 - [商业化分析](docs/commercialization.md)
 - [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
-- [简历项目描述与面试讲述稿](docs/resume-and-interview.md)

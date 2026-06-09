@@ -10,7 +10,7 @@ function printHelp() {
   console.log(`Batch JD analysis
 
 Usage:
-  node scripts/batch-jd-analysis.js --input examples/xiaomi-ai-pm-batch.json
+  node scripts/batch-jd-analysis.js --input examples/batch-jd-analysis.json
 
 Options:
   --input <file>       JSON file with an array of JD analysis items.
