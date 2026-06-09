@@ -73,7 +73,11 @@ function renderHistory() {
   historyList.innerHTML = "";
 
   if (!items.length) {
-    historyList.innerHTML = '<p class="history-meta">暂无历史记录，生成结果后可保存到本地。</p>';
+    historyList.innerHTML = `
+      <p class="history-meta">暂无历史记录，生成结果后可保存到本地。</p>
+      <p class="history-meta">建议按岗位保存，后续可以扩展为投递看板。</p>
+      <p class="history-meta">当前使用 localStorage 做轻量验证。</p>
+    `;
     return;
   }
 
@@ -134,15 +138,15 @@ clearBtn.addEventListener("click", () => {
   resultContent.innerHTML = `
     <h3>等待生成</h3>
     <p>填写左侧信息后，结果将展示在这里。</p>
-    <ul>
-      <li>岗位核心职责</li>
-      <li>能力关键词</li>
-      <li>能力匹配度</li>
-      <li>能力差距</li>
-      <li>简历改写建议</li>
-      <li>面试准备问题</li>
-      <li>下一步学习建议</li>
-    </ul>
+    <div class="empty-grid">
+      <span>岗位核心职责</span>
+      <span>能力关键词</span>
+      <span>能力匹配度</span>
+      <span>能力差距</span>
+      <span>简历改写建议</span>
+      <span>面试准备问题</span>
+      <span>下一步学习建议</span>
+    </div>
   `;
   hideError();
 });

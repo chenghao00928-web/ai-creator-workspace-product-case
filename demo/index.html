@@ -8,24 +8,70 @@
   </head>
   <body>
     <main class="app-shell">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">AI 产品经理作品集 Demo</p>
-          <h1>AI 求职工作台</h1>
-          <p class="subtitle">
-            输入岗位 JD 和个人背景，一键生成岗位分析、能力差距、简历改写建议和面试问题。
-          </p>
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">AI</span>
+          <div>
+            <p class="eyebrow">AI 产品经理作品集 Demo</p>
+            <h1>AI 求职工作台</h1>
+          </div>
         </div>
-        <div class="hero-badge">
-          <span>DeepSeek API</span>
-          <strong>JD 分析</strong>
+        <div class="topbar-actions">
+          <span class="status-pill">DeepSeek API</span>
+          <span class="status-pill status-pill-strong">JD 分析链路</span>
+        </div>
+      </header>
+
+      <section class="overview">
+        <div class="overview-copy">
+          <p class="subtitle">
+            把岗位 JD、个人背景和输出重点整理成结构化输入，生成岗位拆解、能力差距、简历改写建议和面试准备问题。
+          </p>
+          <div class="workflow-steps" aria-label="产品流程">
+            <span>JD 输入</span>
+            <span>能力拆解</span>
+            <span>简历建议</span>
+            <span>面试准备</span>
+          </div>
+        </div>
+        <div class="metric-grid" aria-label="Demo 指标">
+          <article>
+            <span>输出模块</span>
+            <strong>8</strong>
+          </article>
+          <article>
+            <span>历史保存</span>
+            <strong>本地</strong>
+          </article>
+          <article>
+            <span>成本口径</span>
+            <strong>Token</strong>
+          </article>
         </div>
       </section>
 
       <section class="workspace">
+        <aside class="workspace-rail" aria-label="工作台导航">
+          <div class="rail-item active">
+            <span>01</span>
+            <strong>岗位分析</strong>
+          </div>
+          <div class="rail-item">
+            <span>02</span>
+            <strong>简历改写</strong>
+          </div>
+          <div class="rail-item">
+            <span>03</span>
+            <strong>面试准备</strong>
+          </div>
+        </aside>
+
         <form id="analysisForm" class="panel form-panel">
           <div class="panel-header">
-            <h2>输入信息</h2>
+            <div>
+              <p class="section-kicker">Input</p>
+              <h2>求职信息</h2>
+            </div>
             <button type="button" id="fillExampleBtn" class="ghost-button">填入示例</button>
           </div>
 
@@ -45,7 +91,7 @@
             <textarea
               id="jobDescription"
               name="jobDescription"
-              rows="9"
+              rows="8"
               placeholder="粘贴岗位职责、任职要求、加分项等..."
               required
             ></textarea>
@@ -56,7 +102,7 @@
             <textarea
               id="userBackground"
               name="userBackground"
-              rows="7"
+              rows="6"
               placeholder="例如：西安交通大学应用统计研一，本科工商管理，有数据分析基础..."
               required
             ></textarea>
@@ -83,11 +129,29 @@
 
         <section class="panel result-panel">
           <div class="panel-header">
-            <h2>分析结果</h2>
+            <div>
+              <p class="section-kicker">Output</p>
+              <h2>分析结果</h2>
+            </div>
             <div class="result-actions">
               <button type="button" id="copyBtn" class="ghost-button">复制结果</button>
               <button type="button" id="saveBtn" class="ghost-button">保存到本地历史</button>
             </div>
+          </div>
+
+          <div class="result-summary">
+            <article>
+              <span>匹配判断</span>
+              <strong>待生成</strong>
+            </article>
+            <article>
+              <span>建议模块</span>
+              <strong>8 项</strong>
+            </article>
+            <article>
+              <span>可复用资产</span>
+              <strong>历史记录</strong>
+            </article>
           </div>
 
           <div id="loadingBox" class="loading-box" hidden>
@@ -98,22 +162,25 @@
           <article id="resultContent" class="result-content empty">
             <h3>等待生成</h3>
             <p>填写左侧信息后，结果将展示在这里。</p>
-            <ul>
-              <li>岗位核心职责</li>
-              <li>能力关键词</li>
-              <li>能力匹配度</li>
-              <li>能力差距</li>
-              <li>简历改写建议</li>
-              <li>面试准备问题</li>
-              <li>下一步学习建议</li>
-            </ul>
+            <div class="empty-grid">
+              <span>岗位核心职责</span>
+              <span>能力关键词</span>
+              <span>能力匹配度</span>
+              <span>能力差距</span>
+              <span>简历改写建议</span>
+              <span>面试准备问题</span>
+              <span>下一步学习建议</span>
+            </div>
           </article>
         </section>
       </section>
 
       <section class="panel history-panel">
         <div class="panel-header">
-          <h2>本地历史记录</h2>
+          <div>
+            <p class="section-kicker">Archive</p>
+            <h2>本地历史记录</h2>
+          </div>
           <button type="button" id="clearHistoryBtn" class="ghost-button">清空历史</button>
         </div>
         <div id="historyList" class="history-list"></div>

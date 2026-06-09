@@ -45,6 +45,8 @@ ai-creator-workspace-product-case/
 
 Demo 演示讲解和验收清单见：[Demo Walkthrough](docs/demo-walkthrough.md)。
 
+![AI 求职工作台 Demo 首页](assets/demo-workspace-home.png)
+
 ### 5.1 安装依赖
 
 ```bash
