@@ -1,7 +1,7 @@
 {
-  "name": "ai-job-workspace-demo-server",
+  "name": "ai-analysis-workspace-demo-server",
   "version": "1.0.0",
-  "description": "Backend API for AI 求职工作台 Demo using DeepSeek OpenAI-compatible API.",
+  "description": "Backend API for AI 信息分析工作台 Demo using DeepSeek OpenAI-compatible API.",
   "type": "module",
   "main": "index.js",
   "scripts": {

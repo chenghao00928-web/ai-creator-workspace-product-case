@@ -3,28 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI 求职工作台 Demo</title>
+    <title>AI 信息分析工作台 Demo</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="app-shell">
       <aside class="sidebar" aria-label="任务导航">
-        <a class="brand" href="#demo" aria-label="AI 求职工作台">
+        <a class="brand" href="#demo" aria-label="AI 信息分析工作台">
           <span class="brand-mark">AI</span>
           <span>
-            <strong>AI 求职工作台</strong>
-            <em>JD 到求职方案</em>
+            <strong>AI 信息分析工作台</strong>
+            <em>文本到结构化方案</em>
           </span>
         </a>
 
         <nav class="task-nav" aria-label="分析任务">
-          <button type="button" class="task-button active" data-task="jd">
-            <span>JD</span>
-            <strong>JD 解析</strong>
+          <button type="button" class="task-button active" data-task="text">
+            <span>TXT</span>
+            <strong>需求解析</strong>
           </button>
-          <button type="button" class="task-button" data-task="resume">
-            <span>CV</span>
-            <strong>简历匹配</strong>
+          <button type="button" class="task-button" data-task="background">
+            <span>BG</span>
+            <strong>背景匹配</strong>
           </button>
           <button type="button" class="task-button" data-task="competitor">
             <span>CA</span>
@@ -34,9 +34,9 @@
             <span>PRD</span>
             <strong>PRD 初稿</strong>
           </button>
-          <button type="button" class="task-button" data-task="interview">
+          <button type="button" class="task-button" data-task="action">
             <span>Q</span>
-            <strong>面试问题</strong>
+            <strong>行动清单</strong>
           </button>
           <button type="button" class="task-button" data-task="qa">
             <span>QA</span>
@@ -47,7 +47,7 @@
         <div class="sidebar-card">
           <p class="muted-label">当前输入</p>
           <div class="input-summary">
-            <span>JD 字数 <strong id="sideJdChars">0</strong></span>
+            <span>文本字数 <strong id="sideTextChars">0</strong></span>
             <span>背景字数 <strong id="sideBgChars">0</strong></span>
             <span>输出模块 <strong id="sideModuleCount">3</strong></span>
           </div>
@@ -57,8 +57,8 @@
       <main id="demo" class="workspace">
         <header class="topbar">
           <div>
-            <p class="eyebrow">AI Job Workspace</p>
-            <h1>让 JD 分析、简历优化和面试准备更高效</h1>
+            <p class="eyebrow">AI Analysis Workspace</p>
+            <h1>把复杂文本转成结构化分析和可执行方案</h1>
           </div>
           <div class="topbar-actions">
             <a class="ghost-button" href="https://github.com/chenghao00928-web/ai-creator-workspace-product-case" target="_blank" rel="noreferrer">GitHub</a>
@@ -68,9 +68,9 @@
 
         <section class="metric-strip" aria-label="工作台概览">
           <article>
-            <span>JD 输入</span>
-            <strong id="metricJdChars">0 字</strong>
-            <em>来自岗位 JD 输入框</em>
+            <span>需求文本</span>
+            <strong id="metricTextChars">0 字</strong>
+            <em>来自需求文本输入框</em>
           </article>
           <article>
             <span>个人背景</span>
@@ -95,15 +95,15 @@
               <div class="panel-header compact">
                 <div>
                   <p class="section-kicker">当前任务</p>
-                  <h2 id="modeTitle">JD 解析</h2>
+                  <h2 id="modeTitle">需求解析</h2>
                 </div>
-                <span id="modeBadge" class="status-chip">岗位理解</span>
+                <span id="modeBadge" class="status-chip">信息拆解</span>
               </div>
-              <p id="modeDescription" class="mode-description">提取岗位职责、能力关键词和隐性要求，帮助用户先看懂岗位。</p>
+              <p id="modeDescription" class="mode-description">提取原始文本中的目标、约束、关键信息和隐性要求。</p>
               <div id="modeChips" class="chip-row">
-                <span>岗位职责</span>
-                <span>硬性要求</span>
-                <span>隐性能力</span>
+                <span>目标拆解</span>
+                <span>关键约束</span>
+                <span>隐性要求</span>
               </div>
             </section>
 
@@ -111,18 +111,18 @@
               <div class="panel-header">
                 <div>
                   <p class="section-kicker">输入</p>
-                  <h2>输入求职信息</h2>
+                  <h2>输入分析信息</h2>
                 </div>
               </div>
 
               <div class="form-grid">
                 <label>
-                  目标岗位
+                  分析对象
                   <input
                     id="targetRole"
                     name="targetRole"
                     type="text"
-                    placeholder="例如：产品经理实习生"
+                    placeholder="例如：AIGC 内容生成工具"
                     required
                   />
                 </label>
@@ -138,23 +138,23 @@
               </div>
 
               <label>
-                岗位 JD
+                需求文本
                 <textarea
                   id="jobDescription"
                   name="jobDescription"
                   rows="7"
-                  placeholder="粘贴岗位职责、任职要求、加分项等..."
+                  placeholder="粘贴需求说明、业务背景、用户反馈、产品资料等..."
                   required
                 ></textarea>
               </label>
 
               <label>
-                个人背景
+                背景信息
                 <textarea
                   id="userBackground"
                   name="userBackground"
                   rows="5"
-                  placeholder="例如：学校、专业、项目经历、技能、求职方向..."
+                  placeholder="例如：项目背景、目标用户、已有方案、约束条件、参考资料..."
                   required
                 ></textarea>
               </label>
@@ -162,11 +162,11 @@
               <fieldset>
                 <legend>输出模块</legend>
                 <div class="checkbox-grid">
-                  <label><input type="checkbox" value="JD 解析" checked /> JD 解析</label>
-                  <label><input type="checkbox" value="简历匹配" checked /> 简历匹配</label>
+                  <label><input type="checkbox" value="需求解析" checked /> 需求解析</label>
+                  <label><input type="checkbox" value="背景匹配" checked /> 背景匹配</label>
                   <label><input type="checkbox" value="竞品分析" /> 竞品分析</label>
                   <label><input type="checkbox" value="PRD 初稿" /> PRD 初稿</label>
-                  <label><input type="checkbox" value="面试问题" checked /> 面试问题</label>
+                  <label><input type="checkbox" value="行动清单" checked /> 行动清单</label>
                   <label><input type="checkbox" value="输出质量检查" /> 输出质检</label>
                 </div>
               </fieldset>
@@ -192,13 +192,13 @@
 
               <div id="loadingBox" class="loading-box" hidden>
                 <span class="spinner"></span>
-                <p>正在分析岗位要求、能力差距和简历表达...</p>
+                <p>正在分析需求文本、背景约束和可执行建议...</p>
               </div>
 
               <article id="resultContent" class="result-content empty">
                 <div class="empty-state">
                   <h3>等待生成结果</h3>
-                  <p>填写岗位 JD 和个人背景后点击“生成分析”，这里会展示真实接口返回的分析内容。</p>
+                  <p>填写需求文本和背景信息后点击“生成分析”，这里会展示真实接口返回的分析内容。</p>
                 </div>
               </article>
             </section>
@@ -216,12 +216,12 @@
                 <article>
                   <span class="status-chip blue">输入完整度</span>
                   <strong id="boardCompleteness">0%</strong>
-                  <p id="boardCompletenessText">等待填写岗位和背景</p>
+                  <p id="boardCompletenessText">等待填写文本和背景</p>
                 </article>
                 <article>
                   <span class="status-chip amber">待补字段</span>
                   <strong id="boardMissing">2</strong>
-                  <p id="boardMissingText">目标岗位、JD、个人背景</p>
+                  <p id="boardMissingText">分析对象、需求文本、背景信息</p>
                 </article>
                 <article>
                   <span class="status-chip green">本次结果</span>

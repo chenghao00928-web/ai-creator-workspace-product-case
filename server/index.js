@@ -34,7 +34,7 @@ function validatePayload(payload) {
 
   if (!targetRole || !jobDescription || !userBackground) {
     return {
-      error: "请填写目标岗位、岗位 JD 和个人背景后再生成分析。"
+      error: "请填写分析对象、需求文本和背景信息后再生成分析。"
     };
   }
 
@@ -44,7 +44,7 @@ function validatePayload(payload) {
     userBackground.length > MAX_TEXT_LENGTH
   ) {
     return {
-      error: "输入内容过长，请精简岗位 JD 或个人背景后重试。"
+      error: "输入内容过长，请精简需求文本或背景信息后重试。"
     };
   }
 
@@ -53,40 +53,40 @@ function validatePayload(payload) {
       targetRole,
       jobDescription,
       userBackground,
-      focusAreas: focusAreas.length ? focusAreas : ["岗位职责", "能力关键词", "能力差距", "简历改写建议", "面试问题"]
+      focusAreas: focusAreas.length ? focusAreas : ["需求解析", "背景匹配", "竞品分析", "PRD 初稿", "行动清单", "输出质量检查"]
     }
   };
 }
 
-const systemPrompt = `你是一名 AI 产品经理求职辅导助手，擅长分析实习岗位 JD、拆解岗位能力要求，并结合用户背景给出简历优化和面试准备建议。
+const systemPrompt = `你是一名 AI 产品分析助手，擅长分析需求文本、拆解业务目标、识别信息缺口，并结合背景资料给出结构化建议。
 你的回答必须结构化、具体、可执行，避免空泛表达。
-不要编造用户没有提供的经历。如果信息不足，请明确说明需要补充的信息。
+不要编造用户没有提供的信息。如果信息不足，请明确说明需要补充的信息。
 输出必须使用 Markdown，并固定包含以下 8 个部分：
-1. 岗位核心职责
-2. 能力关键词
-3. 用户背景匹配分析
-4. 能力差距
-5. 简历改写建议
-6. 面试可能问题
-7. 下一步学习建议
+1. 核心目标
+2. 关键信息
+3. 背景匹配分析
+4. 信息缺口
+5. 方案建议
+6. 可追问问题
+7. 下一步行动清单
 8. 风险提示`;
 
 function buildUserPrompt({ targetRole, jobDescription, userBackground, focusAreas }) {
-  return `请分析以下求职信息，并重点关注：${focusAreas.join("、")}。
+  return `请分析以下信息，并重点关注：${focusAreas.join("、")}。
 
-目标岗位：
+分析对象：
 ${targetRole}
 
-岗位 JD：
+需求文本：
 ${jobDescription}
 
-用户背景：
+背景信息：
 ${userBackground}
 
-请输出结构化、具体、可执行的求职分析。简历改写建议需要包含改写方向和示例表达；面试问题需要覆盖 AI 产品理解、用户研究、数据分析、项目经历和岗位匹配。`;
+请输出结构化、具体、可执行的分析结果。方案建议需要包含判断依据、可执行动作和必要的补充信息；可追问问题需要帮助用户继续澄清需求、验证方案和完善材料。`;
 }
 
-app.post("/api/analyze-jd", async (req, res) => {
+app.post("/api/analyze-text", async (req, res) => {
   if (!process.env.DEEPSEEK_API_KEY) {
     return res.status(500).json({
       error: "服务端未配置 DEEPSEEK_API_KEY，请在 .env 中配置后重启服务。"
@@ -145,5 +145,5 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`AI 求职工作台 Demo server running at http://localhost:${PORT}`);
+  console.log(`AI 信息分析工作台 Demo server running at http://localhost:${PORT}`);
 });

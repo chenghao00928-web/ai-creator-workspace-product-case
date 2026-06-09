@@ -21,12 +21,12 @@ const modeBadge = document.querySelector("#modeBadge");
 const modeDescription = document.querySelector("#modeDescription");
 const modeChips = document.querySelector("#modeChips");
 
-const metricJdChars = document.querySelector("#metricJdChars");
+const metricTextChars = document.querySelector("#metricTextChars");
 const metricBgChars = document.querySelector("#metricBgChars");
 const metricModuleCount = document.querySelector("#metricModuleCount");
 const headlineCost = document.querySelector("#headlineCost");
 const headlineModel = document.querySelector("#headlineModel");
-const sideJdChars = document.querySelector("#sideJdChars");
+const sideTextChars = document.querySelector("#sideTextChars");
 const sideBgChars = document.querySelector("#sideBgChars");
 const sideModuleCount = document.querySelector("#sideModuleCount");
 const costNote = document.querySelector("#costNote");
@@ -39,32 +39,32 @@ const boardResultReady = document.querySelector("#boardResultReady");
 const boardResultText = document.querySelector("#boardResultText");
 const taskChecklist = document.querySelector("#taskChecklist");
 
-const STORAGE_KEY = "ai-job-workspace-history";
+const STORAGE_KEY = "ai-analysis-workspace-history";
 
 let currentResult = "";
 let currentModel = "deepseek";
 let hasGeneratedResult = false;
 
 const taskMeta = {
-  jd: {
-    title: "JD 解析",
-    badge: "岗位理解",
-    focusValue: "JD 解析",
-    description: "提取岗位职责、能力关键词和隐性要求，帮助用户先看懂岗位。",
-    chips: ["岗位职责", "硬性要求", "隐性能力"]
+  text: {
+    title: "需求解析",
+    badge: "信息拆解",
+    focusValue: "需求解析",
+    description: "提取原始文本中的目标、约束、关键信息和隐性要求。",
+    chips: ["目标拆解", "关键约束", "隐性要求"]
   },
-  resume: {
-    title: "简历匹配",
-    badge: "差距定位",
-    focusValue: "简历匹配",
-    description: "把个人背景和 JD 对齐，识别可强化经历、表达短板和修改方向。",
-    chips: ["匹配优势", "能力短板", "改写建议"]
+  background: {
+    title: "背景匹配",
+    badge: "匹配分析",
+    focusValue: "背景匹配",
+    description: "把背景信息与需求文本对齐，识别优势、缺口和补充方向。",
+    chips: ["匹配优势", "信息缺口", "补充建议"]
   },
   competitor: {
     title: "竞品分析",
     badge: "产品视角",
     focusValue: "竞品分析",
-    description: "基于目标岗位补充可展示的竞品分析框架和机会点。",
+    description: "基于分析对象补充可展示的竞品分析框架和机会点。",
     chips: ["竞品矩阵", "机会点", "差异化"]
   },
   prd: {
@@ -74,12 +74,12 @@ const taskMeta = {
     description: "把功能需求转成页面结构、字段、状态、异常和验收标准。",
     chips: ["功能范围", "页面结构", "验收标准"]
   },
-  interview: {
-    title: "面试问题",
-    badge: "面试准备",
-    focusValue: "面试问题",
-    description: "基于 JD 和简历生成个性化追问，覆盖行为题、项目题和产品题。",
-    chips: ["高频问题", "项目追问", "回答提纲"]
+  action: {
+    title: "行动清单",
+    badge: "下一步",
+    focusValue: "行动清单",
+    description: "基于当前分析结果生成下一步行动、验证任务和补充材料清单。",
+    chips: ["待验证", "待补充", "优先级"]
   },
   qa: {
     title: "输出质检",
@@ -94,12 +94,12 @@ const modelMeta = {
   deepseek: {
     label: "DeepSeek",
     standardCost: 0.0345,
-    note: "按当前 JD、个人背景和输出模块数量估算。实际费用会受模型、重试、输出长度影响。"
+    note: "按当前文本、背景信息和输出模块数量估算。实际费用会受模型、重试、输出长度影响。"
   },
   kimi: {
     label: "Kimi",
     standardCost: 0.058,
-    note: "适合长文本 JD 与简历材料处理，当前费用按输入规模动态估算。"
+    note: "适合长文本资料处理，当前费用按输入规模动态估算。"
   },
   gpt: {
     label: "GPT",
@@ -127,35 +127,35 @@ function getPlainLength(value) {
 }
 
 function estimateCost() {
-  const jdChars = getPlainLength(jobDescriptionInput.value);
+  const textChars = getPlainLength(jobDescriptionInput.value);
   const bgChars = getPlainLength(userBackgroundInput.value);
   const moduleCount = getFocusAreas().length || 1;
-  if (jdChars + bgChars === 0) return 0;
-  const estimatedTokens = Math.ceil((jdChars + bgChars) * 0.75 + moduleCount * 420);
+  if (textChars + bgChars === 0) return 0;
+  const estimatedTokens = Math.ceil((textChars + bgChars) * 0.75 + moduleCount * 420);
   const normalizedTaskCount = Math.max(estimatedTokens / 3200, 0);
   return modelMeta[currentModel].standardCost * normalizedTaskCount;
 }
 
 function updateWorkspaceState() {
   const targetFilled = Boolean(targetRoleInput.value.trim());
-  const jdChars = getPlainLength(jobDescriptionInput.value);
+  const textChars = getPlainLength(jobDescriptionInput.value);
   const bgChars = getPlainLength(userBackgroundInput.value);
   const selectedModules = getFocusAreas();
   const missingItems = [];
 
-  if (!targetFilled) missingItems.push("目标岗位");
-  if (!jdChars) missingItems.push("岗位 JD");
-  if (!bgChars) missingItems.push("个人背景");
+  if (!targetFilled) missingItems.push("分析对象");
+  if (!textChars) missingItems.push("需求文本");
+  if (!bgChars) missingItems.push("背景信息");
 
   const completeness = Math.round(((3 - missingItems.length) / 3) * 100);
   const cost = estimateCost();
 
-  metricJdChars.textContent = `${jdChars} 字`;
+  metricTextChars.textContent = `${textChars} 字`;
   metricBgChars.textContent = `${bgChars} 字`;
   metricModuleCount.textContent = `${selectedModules.length} 项`;
   headlineCost.textContent = `${cost.toFixed(4)} RMB`;
   headlineModel.textContent = modelMeta[currentModel].label;
-  sideJdChars.textContent = String(jdChars);
+  sideTextChars.textContent = String(textChars);
   sideBgChars.textContent = String(bgChars);
   sideModuleCount.textContent = String(selectedModules.length);
   boardCompleteness.textContent = `${completeness}%`;
@@ -191,7 +191,7 @@ function setLoading(isLoading) {
 }
 
 function setTask(task) {
-  const meta = taskMeta[task] || taskMeta.jd;
+  const meta = taskMeta[task] || taskMeta.text;
   taskButtons.forEach((button) => button.classList.toggle("active", button.dataset.task === task));
   modeTitle.textContent = meta.title;
   modeBadge.textContent = meta.badge;
@@ -236,7 +236,7 @@ function renderEmptyResult() {
   resultContent.innerHTML = `
     <div class="empty-state">
       <h3>等待生成结果</h3>
-      <p>填写岗位 JD 和个人背景后点击“生成分析”，这里会展示真实接口返回的分析内容。</p>
+      <p>填写需求文本和背景信息后点击“生成分析”，这里会展示真实接口返回的分析内容。</p>
     </div>
   `;
   updateWorkspaceState();
@@ -266,7 +266,7 @@ function renderHistory() {
   if (!items.length) {
     historyList.innerHTML = `
       <div class="history-empty">
-        <p class="history-meta">暂无保存结果。生成后可归档到本地，适合按投递岗位沉淀。</p>
+        <p class="history-meta">暂无保存结果。生成后可归档到本地，便于按项目或主题沉淀。</p>
       </div>
     `;
     return;
@@ -297,7 +297,7 @@ form.addEventListener("submit", async (event) => {
   };
 
   try {
-    const response = await fetch("/api/analyze-jd", {
+    const response = await fetch("/api/analyze-text", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -362,7 +362,7 @@ saveBtn.addEventListener("click", () => {
     return;
   }
 
-  const targetRole = targetRoleInput.value.trim() || "未命名岗位分析";
+  const targetRole = targetRoleInput.value.trim() || "未命名分析";
   const history = readHistory();
   history.unshift({
     targetRole,

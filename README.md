@@ -1,50 +1,47 @@
-# AIGC 竞品分析与 AI 求职工作台 Demo
+# AIGC 竞品分析与 AI 信息分析工作台 Demo
 
 ## 1. 项目定位
 
-本项目是一个面向 **实习/校招求职学生** 的 AIGC 产品作品集项目。
+本项目是一个 AIGC 产品分析与可运行 Demo 项目，重点展示从竞品研究、用户需求洞察、产品方案设计、前后端 Demo、Token 成本测算到 PDF 交付物生成的完整产品工作链路。
 
 项目围绕豆包、Kimi、通义千问、即梦 AI、ChatGPT、Claude、Gemini 等国内外 AIGC 产品展开竞品分析，重点拆解 Prompt 引导、生成结果编辑、历史管理、多模态能力、工作流闭环和会员商业化策略。
 
-在竞品分析和用户调研基础上，项目设计一个面向求职学生的 **AI 求职工作台 MVP**，帮助用户完成岗位 JD 解析、能力差距分析、简历表达改写、面试问题生成和投递项目管理。
-
-本项目适合用于产品、运营、数据分析等实习岗位投递，重点展示 AIGC 竞品分析、用户需求洞察、AI 产品功能设计、PRD、低保真原型、大模型 API 接入 Demo、Token 成本测算和商业化思考。
+在竞品分析和用户研究基础上，项目设计了一个 **AI 信息分析工作台 MVP**，用于把非结构化资料转成结构化分析结果，支持需求解析、背景匹配、竞品分析、PRD 初稿、行动清单和输出质量检查。
 
 ## 2. 项目亮点
 
 - **AIGC 竞品分析**：覆盖国内外主流 AI 产品，比较产品定位、交互、工作流和商业化。
-- **用户需求洞察**：基于 7 位访谈对象，提炼求职、创作、办公、教育等场景痛点。
-- **AI 求职工作台 MVP**：将泛创作助手收窄为更适合求职学生的 JD 分析和简历优化链路。
-- **PRD 与低保真原型**：输出页面、字段、状态、异常、验收标准和页面线框。
+- **用户需求洞察**：围绕创作、办公、教育和资料处理场景，提炼高频任务与输出痛点。
+- **AI 信息分析工作台 MVP**：将通用聊天式生成收敛为结构化输入、任务化处理和可复用输出。
 - **大模型 API 接入 Demo**：使用 Node.js + Express + OpenAI SDK 调用 DeepSeek API。
-- **Token 成本与商业化**：测算单次任务成本，设计免费版、学生版、专业版和团队版套餐。
+- **Token 成本与商业化**：测算单次任务成本，比较不同模型在标准分析任务下的成本差异。
+- **PDF 自动生成**：使用脚本将 PRD 摘要和项目展示内容排版为 16:9 PDF。
 
 ## 3. 核心用户与场景
 
 | 用户类型 | 核心任务 | 项目方案 |
 |---|---|---|
-| 求职学生 | 解析岗位 JD、准备简历和面试 | AI 求职工作台 MVP |
-| 产品 / 运营 / 数据分析方向求职者 | 将作品集和经历转成岗位匹配表达 | JD 分析、能力差距、面试问题 |
-| 数据分析 / 产品 / 运营方向求职者 | 拆解岗位能力、包装项目经历 | 能力关键词、简历改写建议 |
-| 内容创作 / 教育 / 办公用户 | 后续扩展任务 | 放入 P1/P2 扩展场景 |
+| 内容创作用户 | 拆解选题、脚本、账号资料 | 结构化分析与多版本输出 |
+| 运营 / 产品用户 | 整理需求、竞品、用户反馈 | 需求解析、PRD 初稿、输出质检 |
+| 教育 / 知识管理用户 | 总结资料、形成学习或研究框架 | 资料分析、背景匹配、行动清单 |
+| 个人项目用户 | 沉淀项目资料和分析结果 | 本地历史、模型成本、PDF 交付物 |
 
 ## 4. 项目结构
 
 ```text
 ai-creator-workspace-product-case/
-├── docs/          # 竞品分析、用户研究、产品报告、PRD、API 接入、商业化
+├── docs/          # 竞品分析、用户研究、产品报告、API 接入、商业化
 ├── data/          # Token 成本测算表
-├── demo/          # AI 求职工作台前端 Demo
+├── demo/          # AI 信息分析工作台前端 Demo
 ├── server/        # Node.js + Express 后端接口
-├── scripts/       # 批量 JD 分析等轻量自动化脚本
-├── examples/      # 真实 JD 分析案例
+├── scripts/       # PDF 自动生成脚本
 ├── prototype/     # 低保真原型设计
 └── assets/        # 截图和素材
 ```
 
 ## 5. Demo 运行方式
 
-![AI 求职工作台 Demo 首页](assets/demo-workspace-home.png)
+![AI 信息分析工作台 Demo 首页](assets/demo-workspace-home.png)
 
 ### 5.1 安装依赖
 
@@ -89,17 +86,17 @@ http://localhost:3000
 接口：
 
 ```text
-POST /api/analyze-jd
+POST /api/analyze-text
 ```
 
 请求示例：
 
 ```json
 {
-  "targetRole": "AI 产品经理实习生",
-  "jobDescription": "...",
-  "userBackground": "...",
-  "focusAreas": ["能力关键词", "简历改写建议", "面试问题"]
+  "targetRole": "AIGC 内容生成工具",
+  "jobDescription": "需要分析的一段需求文本、产品资料或用户反馈...",
+  "userBackground": "项目背景、目标用户、已有方案和约束条件...",
+  "focusAreas": ["需求解析", "背景匹配", "行动清单"]
 }
 ```
 
@@ -107,59 +104,19 @@ POST /api/analyze-jd
 
 ## 7. PDF 交付物
 
-- [AI 求职工作台 MVP PRD PDF](docs/ai-job-workspace-prd.pdf)
-- [AI 求职工作台作品集 PDF](docs/ai-job-workspace-portfolio.pdf)
+- [AI 信息分析工作台 PRD 摘要 PDF](docs/ai-analysis-workspace-prd.pdf)
+- [AI 信息分析工作台项目展示 PDF](docs/ai-analysis-workspace-portfolio.pdf)
 
-## 8. 作品集展示路径
-
-建议面试或投递时按以下顺序展示：
-
-1. [国内外 AIGC 产品体验与产品策略对比](docs/domestic-vs-global-ai-products.md)
-2. [AIGC 竞品分析](docs/competitor-analysis.md)
-3. [用户研究](docs/user-research.md)
-4. [产品方案报告](docs/product-report.md)
-5. [PRD 初稿](docs/prd.md)
-6. [低保真原型设计](prototype/low-fidelity-wireframes.md)
-7. [Prompt 设计说明](docs/prompt-design.md)
-8. [大模型 API 接入说明](docs/api-integration.md)
-9. [AI 产品经理实习生 JD 分析案例](examples/ai-pm-intern-jd-case.md)
-10. [Prompt 模板库](docs/prompt-template-library.md)
-11. [商业化分析](docs/commercialization.md)
-12. [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
-
-## 9. 面试讲述重点
-
-可以将项目讲成一条完整 AI 产品经理工作链路：
-
-```text
-国内外 AIGC 竞品分析
-  -> 用户访谈和痛点洞察
-  -> 收窄到 AI 求职工作台 MVP
-  -> PRD 和低保真原型
-  -> DeepSeek API Demo
-  -> Token 成本测算和商业化设计
-```
-
-重点表达：
-
-- 我不是只写了一个产品分析报告，而是把项目做成了能运行的 AI Demo。
-- 我理解 AI 产品不仅要会设计功能，还要考虑 Prompt、API Key 安全、模型成本、输出结构和异常处理。
-- 我将个人背景和求职目标结合，设计了适合实习投递展示的 AI 求职产品作品集项目。
-
-## 10. 已完成产出
+## 8. 已完成产出
 
 - [AIGC 竞品分析](docs/competitor-analysis.md)
 - [国内外 AIGC 产品体验与产品策略对比](docs/domestic-vs-global-ai-products.md)
 - [用户研究](docs/user-research.md)
 - [迭代优先级](docs/iteration-plan.md)
 - [产品方案报告](docs/product-report.md)
-- [PRD 初稿](docs/prd.md)
-- [AI 求职工作台 MVP PRD PDF](docs/ai-job-workspace-prd.pdf)
-- [低保真原型设计](prototype/low-fidelity-wireframes.md)
 - [Prompt 设计说明](docs/prompt-design.md)
 - [大模型 API 接入说明](docs/api-integration.md)
-- [AI 产品经理实习生 JD 分析案例](examples/ai-pm-intern-jd-case.md)
 - [Prompt 模板库](docs/prompt-template-library.md)
 - [商业化分析](docs/commercialization.md)
-- [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
-- [AI 求职工作台作品集 PDF](docs/ai-job-workspace-portfolio.pdf)
+- [AI 信息分析工作台 PRD 摘要 PDF](docs/ai-analysis-workspace-prd.pdf)
+- [AI 信息分析工作台项目展示 PDF](docs/ai-analysis-workspace-portfolio.pdf)

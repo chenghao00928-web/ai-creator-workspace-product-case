@@ -4,7 +4,7 @@
 
 ## 当前文件
 
-- `demo-workspace-home.png`：AI 求职工作台桌面端截图，用于展示当前 Demo 的主界面、任务导航、输入区、结果洞察、求职看板和模型成本组件。
+- `demo-workspace-home.png`：AI 信息分析工作台桌面端截图，用于展示当前 Demo 的主界面、任务导航、输入区、结果洞察、状态面板和模型成本组件。
 
 ## 生成说明
 
@@ -19,8 +19,8 @@ npx playwright screenshot --channel msedge --viewport-size=1440,1100 --wait-for-
 项目根目录下的 `scripts` 目录用于放置项目自动化脚本。目前保留的脚本是：
 
 - `scripts/build-portfolio-pdfs.py`：根据内置的 HTML/CSS 页面模板生成两份 PDF 交付物：
-  - `docs/ai-job-workspace-prd.pdf`
-  - `docs/ai-job-workspace-portfolio.pdf`
+  - `docs/ai-analysis-workspace-prd.pdf`
+  - `docs/ai-analysis-workspace-portfolio.pdf`
 
 这个脚本不是后端接口，也不参与网页运行逻辑。它的作用是把 PRD 摘要和作品集内容按 16:9 页面重新排版，再通过本机 Microsoft Edge 的无头打印能力导出 PDF，避免直接把 Markdown 转 PDF 后出现排版松散、空白过多的问题。
 
