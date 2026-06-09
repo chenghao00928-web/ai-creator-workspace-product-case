@@ -2,13 +2,13 @@
 
 ## 1. 项目定位
 
-本项目是一个面向 **AI 产品经理实习岗位** 的 AIGC 产品作品集项目。
+本项目是一个面向 **实习/校招求职学生** 的 AIGC 产品作品集项目。
 
 项目围绕豆包、Kimi、通义千问、即梦 AI、ChatGPT、Claude、Gemini 等国内外 AIGC 产品展开竞品分析，重点拆解 Prompt 引导、生成结果编辑、历史管理、多模态能力、工作流闭环和会员商业化策略。
 
 在竞品分析和用户调研基础上，项目设计一个面向求职学生的 **AI 求职工作台 MVP**，帮助用户完成岗位 JD 解析、能力差距分析、简历表达改写、面试问题生成和投递项目管理。
 
-本项目适合用于 AI 产品经理实习投递，重点展示 AIGC 竞品分析、用户需求洞察、AI 产品功能设计、PRD、低保真原型、大模型 API 接入 Demo、Token 成本测算和商业化思考。
+本项目适合用于产品、运营、数据分析等实习岗位投递，重点展示 AIGC 竞品分析、用户需求洞察、AI 产品功能设计、PRD、低保真原型、大模型 API 接入 Demo、Token 成本测算和商业化思考。
 
 ## 2. 项目亮点
 
@@ -24,7 +24,7 @@
 | 用户类型 | 核心任务 | 项目方案 |
 |---|---|---|
 | 求职学生 | 解析岗位 JD、准备简历和面试 | AI 求职工作台 MVP |
-| AI 产品经理实习求职者 | 将作品集和经历转成岗位匹配表达 | JD 分析、能力差距、面试问题 |
+| 产品 / 运营 / 数据分析方向求职者 | 将作品集和经历转成岗位匹配表达 | JD 分析、能力差距、面试问题 |
 | 数据分析 / 产品 / 运营方向求职者 | 拆解岗位能力、包装项目经历 | 能力关键词、简历改写建议 |
 | 内容创作 / 教育 / 办公用户 | 后续扩展任务 | 放入 P1/P2 扩展场景 |
 
@@ -105,7 +105,12 @@ POST /api/analyze-jd
 
 后端使用 OpenAI SDK 调用 DeepSeek OpenAI-compatible API，默认模型为 `deepseek-v4-flash`，可通过 `DEEPSEEK_MODEL` 调整。
 
-## 7. 作品集展示路径
+## 7. PDF 交付物
+
+- [AI 求职工作台 MVP PRD PDF](docs/ai-job-workspace-prd.pdf)
+- [AI 求职工作台作品集 PDF](docs/ai-job-workspace-portfolio.pdf)
+
+## 8. 作品集展示路径
 
 建议面试或投递时按以下顺序展示：
 
@@ -122,7 +127,7 @@ POST /api/analyze-jd
 11. [商业化分析](docs/commercialization.md)
 12. [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
 
-## 8. 面试讲述重点
+## 9. 面试讲述重点
 
 可以将项目讲成一条完整 AI 产品经理工作链路：
 
@@ -139,9 +144,9 @@ POST /api/analyze-jd
 
 - 我不是只写了一个产品分析报告，而是把项目做成了能运行的 AI Demo。
 - 我理解 AI 产品不仅要会设计功能，还要考虑 Prompt、API Key 安全、模型成本、输出结构和异常处理。
-- 我将个人背景和求职目标结合，设计了适合 AI 产品经理实习投递的作品集项目。
+- 我将个人背景和求职目标结合，设计了适合实习投递展示的 AI 求职产品作品集项目。
 
-## 9. 已完成产出
+## 10. 已完成产出
 
 - [AIGC 竞品分析](docs/competitor-analysis.md)
 - [国内外 AIGC 产品体验与产品策略对比](docs/domestic-vs-global-ai-products.md)
@@ -149,6 +154,7 @@ POST /api/analyze-jd
 - [迭代优先级](docs/iteration-plan.md)
 - [产品方案报告](docs/product-report.md)
 - [PRD 初稿](docs/prd.md)
+- [AI 求职工作台 MVP PRD PDF](docs/ai-job-workspace-prd.pdf)
 - [低保真原型设计](prototype/low-fidelity-wireframes.md)
 - [Prompt 设计说明](docs/prompt-design.md)
 - [大模型 API 接入说明](docs/api-integration.md)
@@ -156,3 +162,4 @@ POST /api/analyze-jd
 - [Prompt 模板库](docs/prompt-template-library.md)
 - [商业化分析](docs/commercialization.md)
 - [作品集 PDF 大纲](docs/portfolio-pdf-outline.md)
+- [AI 求职工作台作品集 PDF](docs/ai-job-workspace-portfolio.pdf)

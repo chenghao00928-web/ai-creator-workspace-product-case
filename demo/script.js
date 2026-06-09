@@ -2,6 +2,7 @@ const form = document.querySelector("#analysisForm");
 const submitBtn = document.querySelector("#submitBtn");
 const clearBtn = document.querySelector("#clearBtn");
 const fillExampleBtn = document.querySelector("#fillExampleBtn");
+const navExampleBtn = document.querySelector("#navExampleBtn");
 const copyBtn = document.querySelector("#copyBtn");
 const saveBtn = document.querySelector("#saveBtn");
 const clearHistoryBtn = document.querySelector("#clearHistoryBtn");
@@ -14,11 +15,11 @@ const STORAGE_KEY = "ai-job-workspace-history";
 let currentResult = "";
 
 const example = {
-  targetRole: "AI 产品经理实习生",
+  targetRole: "产品经理实习生",
   jobDescription:
-    "岗位职责：参与 AI 产品需求分析、竞品调研、Prompt 设计、用户反馈整理和数据分析；协助设计 AI 助手类产品功能，推动原型、PRD 和上线验证。任职要求：了解大模型产品，有用户研究和数据分析意识，能独立完成产品文档和竞品分析。",
+    "岗位职责：参与产品需求分析、竞品调研、用户反馈整理和数据分析；协助设计求职工具类产品功能，推动原型、PRD 和上线验证。任职要求：理解用户需求，有用户研究和数据分析意识，能独立完成产品文档和竞品分析。",
   userBackground:
-    "西安交通大学应用统计研一，本科工商管理，目标 AI 产品经理实习。具备统计和数据分析基础，正在补充 AIGC 产品理解，已完成 AI 创作助手工作台作品集，包括竞品分析、用户访谈、PRD、低保真原型和 Token 成本测算。"
+    "西安交通大学应用统计研一，本科工商管理，目标产品经理实习。具备统计和数据分析基础，正在补充 AI 工具与产品设计理解，已完成 AI 求职工作台作品集，包括竞品分析、用户访谈、PRD、低保真原型和 Token 成本测算。"
 };
 
 function getFocusAreas() {
@@ -39,6 +40,13 @@ function setLoading(isLoading) {
   loadingBox.hidden = !isLoading;
   submitBtn.disabled = isLoading;
   submitBtn.textContent = isLoading ? "生成中..." : "生成分析";
+}
+
+function fillExample() {
+  document.querySelector("#targetRole").value = example.targetRole;
+  document.querySelector("#jobDescription").value = example.jobDescription;
+  document.querySelector("#userBackground").value = example.userBackground;
+  document.querySelector("#demo").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function renderMarkdownLike(text) {
@@ -136,15 +144,17 @@ clearBtn.addEventListener("click", () => {
   currentResult = "";
   resultContent.classList.add("empty");
   resultContent.innerHTML = `
-    <h3>等待生成</h3>
-    <p>填写左侧信息后，结果将展示在这里。</p>
+    <div class="result-placeholder">
+      <h3>等待生成</h3>
+      <p>填写左侧信息后，结果会按卡片分块展示在这里。</p>
+    </div>
     <div class="empty-grid">
-      <span>岗位核心职责</span>
-      <span>能力关键词</span>
-      <span>能力匹配度</span>
-      <span>能力差距</span>
-      <span>简历改写建议</span>
-      <span>面试准备问题</span>
+      <span>匹配度评分</span>
+      <span>能力要求</span>
+      <span>匹配优势</span>
+      <span>能力短板</span>
+      <span>简历修改建议</span>
+      <span>面试问题</span>
       <span>下一步学习建议</span>
     </div>
   `;
@@ -152,9 +162,11 @@ clearBtn.addEventListener("click", () => {
 });
 
 fillExampleBtn.addEventListener("click", () => {
-  document.querySelector("#targetRole").value = example.targetRole;
-  document.querySelector("#jobDescription").value = example.jobDescription;
-  document.querySelector("#userBackground").value = example.userBackground;
+  fillExample();
+});
+
+navExampleBtn.addEventListener("click", () => {
+  fillExample();
 });
 
 copyBtn.addEventListener("click", async () => {
